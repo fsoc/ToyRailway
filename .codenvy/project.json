@@ -1,0 +1,1 @@
+{"mixinTypes":[],"builders":{"configs":{},"default":"maven"},"runners":{"configs":{}},"description":"https://spotify.kattis.com/problems/railway","type":"maven","attributes":{"languageVersion":["1.6"],"language":["java"]}}
