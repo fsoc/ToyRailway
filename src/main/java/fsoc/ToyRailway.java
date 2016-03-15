@@ -4,13 +4,18 @@
 
 package fsoc;
 import java.util.Scanner;
+import java.util.LinkedList;
+
 
 public class ToyRailway  {
   public static void main(String[] args) {
     Scanner scanner = new Scanner(System.in).useDelimiter("\\s");
-
+    
+    // Read the first line denoting "switches connections"
     int switches = scanner.nextInt();
     int connections = scanner.nextInt();
+    
+    LinkedList<Connection>[] vertices = new LinkedList[switches];
 
     while (scanner.hasNext()) {
       String s1 = scanner.next();
@@ -19,9 +24,38 @@ public class ToyRailway  {
       String s2 = scanner.next();
       int connection2 = Integer.parseInt(s2.substring(0, s2.length() - 1));
       String track2 = s2.substring(s2.length() - 1);
-
+      
+      addConnection(connection1, connection2, track1, track2, vertices);
+    
     }
 
     scanner.close();
   }
+  
+  public static void addConnection(int connection1, int connection2,
+                                   String track1, String track2,
+                                   LinkedList<Connection>[] vertices) {
+    
+      Point p1 = new Point(connection1, Gate.valueOf(track1));
+      Point p2 = new Point(connection2, Gate.valueOf(track2));
+    
+    	initiateLinkedList(connection1, vertices);
+      vertices[connection1-1].add(new Connection(p1, p2));
+      
+    	initiateLinkedList(connection2, vertices);
+      vertices[connection2-1].add(new Connection(p2, p1));
+  }
+  
+  private static void initiateLinkedList(int connection,
+                                         LinkedList<Connection>[] vertices) {
+      if (vertices[connection-1] == null) {
+        // Initiate if not already initiated
+        vertices[connection-1] = new LinkedList<Connection>();
+      }
+  }
+  
+  public static void traverseGraph(LinkedList<Connection>[] vertices, long startConnection) {
+    //TODO: bfs search on a bidirectional graph
+  }
+  
 }
