@@ -8,15 +8,15 @@ public class Connection {
     this.from = from;
     this.to = to;
   }
-  
+
   public Point getFrom() {
     return from;
   }
-  
+
   public Point getTo() {
     return to;
   }
-  
+
   public boolean equals(Connection conn) {
     if (from.equals(conn.from) &&
         from.equals(conn.from)) {
