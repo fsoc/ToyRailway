@@ -6,11 +6,14 @@ package fsoc;
 import java.util.Scanner;
 import java.util.LinkedList;
 
-
 public class ToyRailway  {
   public static void main(String[] args) {
     Scanner scanner = new Scanner(System.in).useDelimiter("\\s");
 
+    processIndata(scanner);
+  }
+
+  public static void processIndata(Scanner scanner) {
     // Read the first line denoting "switches connections"
     int switches = scanner.nextInt();
     int connections = scanner.nextInt();
@@ -28,7 +31,6 @@ public class ToyRailway  {
       addConnection(connection1, connection2, track1, track2, vertices);
 
     }
-
     scanner.close();
   }
 
