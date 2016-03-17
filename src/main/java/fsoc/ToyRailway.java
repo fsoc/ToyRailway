@@ -10,10 +10,10 @@ public class ToyRailway  {
   public static void main(String[] args) {
     Scanner scanner = new Scanner(System.in).useDelimiter("\\s");
 
-    processIndata(scanner);
+    LinkedList<Connection>[] vertices = graphCreator(scanner);
   }
 
-  public static void processIndata(Scanner scanner) {
+  public static LinkedList<Connection>[] graphCreator(Scanner scanner) {
     // Read the first line denoting "switches connections"
     int switches = scanner.nextInt();
     int connections = scanner.nextInt();
@@ -32,9 +32,11 @@ public class ToyRailway  {
 
     }
     scanner.close();
+
+    return vertices;
   }
 
-  public static void addConnection(int connection1, int connection2,
+  private static void addConnection(int connection1, int connection2,
       String track1, String track2,
       LinkedList<Connection>[] vertices) {
 
@@ -54,10 +56,6 @@ public class ToyRailway  {
       // Initiate if not already initiated
       vertices[connection-1] = new LinkedList<Connection>();
     }
-  }
-
-  public static void traverseGraph(LinkedList<Connection>[] vertices, long startConnection) {
-    //TODO: bfs search on a bidirectional graph
   }
 
 }

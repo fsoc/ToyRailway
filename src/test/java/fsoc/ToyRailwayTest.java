@@ -4,6 +4,7 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import java.util.LinkedList;
+import java.util.Scanner;
 
 public class ToyRailwayTest extends TestCase {
   public ToyRailwayTest(String testName) {
@@ -14,9 +15,10 @@ public class ToyRailwayTest extends TestCase {
     return new TestSuite(ToyRailwayTest.class);
   }
 
-  public void testConnectionAdder() {
-    LinkedList<Connection>[] switches = new LinkedList[2];
-    ToyRailway.addConnection(1, 2, "B", "A", switches);
+  public void testGraphCreation() {
+    //TODO: read from file:
+    Scanner scanner = new Scanner("2 1\n1B 2A");
+    LinkedList<Connection>[] switches = ToyRailway.graphCreator(scanner);
 
     LinkedList<Connection>[] correctAnswer = new LinkedList[2];
     correctAnswer[0] = new LinkedList<Connection>();
