@@ -4,63 +4,55 @@
 
 package fsoc;
 import java.util.Scanner;
-import java.util.LinkedList;
 
 public class ToyRailway  {
   public static void main(String[] args) {
     Scanner scanner = new Scanner(System.in).useDelimiter("\\s");
 
-    LinkedList<Connection>[] vertices = graphCreator(scanner);
-    System.out.println(BFSsearcher.search(vertices));
+    Connection[][] trainSwitches = graphCreator(scanner);
+//    System.out.println(BFSsearcher.search(trainSwitches));
   }
 
   /**
-   * Create a Graph containing all SwitchPointes in an array, where every
-   * switch is a LinkedList of its connections to other points on a switch
+   * Create a Graph containing all switches in an array, where every
+   * element is an array with 0 to 3 connections to other switches
    */
-  public static LinkedList<Connection>[] graphCreator(Scanner scanner) {
+  public static Connection[][] graphCreator(Scanner scanner) {
     // Read the first line denoting "switches connections"
     int switches = scanner.nextInt();
     int connections = scanner.nextInt();
 
-    LinkedList<Connection>[] vertices = new LinkedList[switches];
+    // Yes, we hardcode for 3 gates...
+    Connection[][] trainSwitches = new Connection[switches][3];
 
+    // Read the rest of lines containing the actual connections
     while (scanner.hasNext()) {
       String s1 = scanner.next();
-      int connection1 = Integer.parseInt(s1.substring(0, s1.length() - 1));
-      String track1 = s1.substring(s1.length() - 1);
+      int trainSwitch1 = Integer.parseInt(s1.substring(0, s1.length() - 1));
+      String gate1 = s1.substring(s1.length() - 1);
       String s2 = scanner.next();
-      int connection2 = Integer.parseInt(s2.substring(0, s2.length() - 1));
-      String track2 = s2.substring(s2.length() - 1);
+      int trainSwitch2 = Integer.parseInt(s2.substring(0, s2.length() - 1));
+      String gate2 = s2.substring(s2.length() - 1);
 
-      addConnection(connection1, connection2, track1, track2, vertices);
+      addConnection(trainSwitch1, trainSwitch2, gate1, gate2, trainSwitches);
 
     }
     scanner.close();
 
-    return vertices;
+    return trainSwitches;
   }
 
-  private static void addConnection(int connection1, int connection2,
-      String track1, String track2,
-      LinkedList<Connection>[] vertices) {
+  // Add two connections for every row since our graph is bidirectional
+  private static void addConnection(int trainSwitch1, int trainSwitch2,
+      String gate1, String gate2,
+      Connection[][] trainSwitches) {
 
-    SwitchPoint p1 = new SwitchPoint(connection1, Gate.valueOf(track1));
-    SwitchPoint p2 = new SwitchPoint(connection2, Gate.valueOf(track2));
+    SwitchPoint p1 = new SwitchPoint(trainSwitch1, Gate.valueOf(gate1));
+    SwitchPoint p2 = new SwitchPoint(trainSwitch2, Gate.valueOf(gate2));
 
-    initiateLinkedList(connection1, vertices);
-    vertices[connection1-1].add(new Connection(p1, p2));
+    trainSwitches[trainSwitch1-1][p1.getGate().getValue()] = new Connection(p1, p2);
+    trainSwitches[trainSwitch2-1][p2.getGate().getValue()] = new Connection(p2, p1);
 
-    initiateLinkedList(connection2, vertices);
-    vertices[connection2-1].add(new Connection(p2, p1));
-  }
-
-  private static void initiateLinkedList(int connection,
-      LinkedList<Connection>[] vertices) {
-    if (vertices[connection-1] == null) {
-      // Initiate if not already initiated
-      vertices[connection-1] = new LinkedList<Connection>();
-    }
   }
 
 }

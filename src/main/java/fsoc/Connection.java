@@ -25,7 +25,8 @@ public class Connection {
     return to;
   }
 
-  public boolean equals(Connection conn) {
+  public boolean equals(Object obj) {
+    Connection conn = (Connection) obj;
     if (from.equals(conn.from) &&
         from.equals(conn.from)) {
       return true;
