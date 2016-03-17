@@ -11,6 +11,7 @@ public class ToyRailway  {
     Scanner scanner = new Scanner(System.in).useDelimiter("\\s");
 
     LinkedList<Connection>[] vertices = graphCreator(scanner);
+    System.out.println(BFSsearcher.search(vertices));
   }
 
   /**
