@@ -13,6 +13,10 @@ public class ToyRailway  {
     LinkedList<Connection>[] vertices = graphCreator(scanner);
   }
 
+  /**
+   * Create a Graph containing all SwitchPointes in an array, where every
+   * switch is a LinkedList of its connections to other points on a switch
+   */
   public static LinkedList<Connection>[] graphCreator(Scanner scanner) {
     // Read the first line denoting "switches connections"
     int switches = scanner.nextInt();
@@ -40,8 +44,8 @@ public class ToyRailway  {
       String track1, String track2,
       LinkedList<Connection>[] vertices) {
 
-    Point p1 = new Point(connection1, Gate.valueOf(track1));
-    Point p2 = new Point(connection2, Gate.valueOf(track2));
+    SwitchPoint p1 = new SwitchPoint(connection1, Gate.valueOf(track1));
+    SwitchPoint p2 = new SwitchPoint(connection2, Gate.valueOf(track2));
 
     initiateLinkedList(connection1, vertices);
     vertices[connection1-1].add(new Connection(p1, p2));
