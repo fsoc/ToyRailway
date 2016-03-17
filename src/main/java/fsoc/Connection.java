@@ -1,19 +1,27 @@
 package fsoc;
 
 public class Connection {
-  private Point from;
-  private Point to;
+  private SwitchPoint from;
+  private SwitchPoint to;
+  private boolean visited;
 
-  public Connection(Point from, Point to) {
+  /**
+   * A connection between two switch points.
+   *
+   * @param from Origin
+   * @param to Destination
+   */
+  public Connection(SwitchPoint from, SwitchPoint to) {
     this.from = from;
     this.to = to;
+    this.visited = false;
   }
 
-  public Point getFrom() {
+  public SwitchPoint getFrom() {
     return from;
   }
 
-  public Point getTo() {
+  public SwitchPoint getTo() {
     return to;
   }
 

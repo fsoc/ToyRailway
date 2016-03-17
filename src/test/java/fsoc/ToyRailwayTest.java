@@ -25,11 +25,11 @@ public class ToyRailwayTest extends TestCase {
     correctAnswer[1] = new LinkedList<Connection>();
 
     correctAnswer[0].add(new Connection(
-          new Point(1, Gate.B),
-          new Point(2, Gate.A)));
+          new SwitchPoint(1, Gate.B),
+          new SwitchPoint(2, Gate.A)));
     correctAnswer[1].add(new Connection(
-          new Point(2, Gate.A),
-          new Point(1, Gate.B)));
+          new SwitchPoint(2, Gate.A),
+          new SwitchPoint(1, Gate.B)));
 
     assertTrue(switches[0].getFirst().equals(correctAnswer[0].getFirst()));
     assertTrue(switches[1].getFirst().equals(correctAnswer[1].getFirst()));
