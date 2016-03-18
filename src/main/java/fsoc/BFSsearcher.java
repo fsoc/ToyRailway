@@ -12,12 +12,14 @@ public class BFSsearcher {
    * @param switches a datastructure with all switches and their connections
    * @return the gate selections needed to take in order to arrive at 1A again
    */
-  public static String search(LinkedList<Connection>[] switches) {
+  public static String search(Connection[][] switches) {
     queue.add(startingPoint.getSwitchPoint());
 
     while (!queue.isEmpty()) {
+      //TODO: queue needs to contain connections instead of switchPoints
       //TODO: getPaths
-      //TODO: mark them as visited
+      //TODO: circleDetection for when to: 1A
+      //TODO: Keep track of the path-string recursivly and print when circle is found
       //TODO: enqueue them
 
     }
