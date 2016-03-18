@@ -1,29 +1,55 @@
 package fsoc;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.*;
+import static org.junit.Assert.*;
+
 import java.util.LinkedList;
 
-public class BFSsearcherTest extends TestCase {
-  public BFSsearcherTest(String testName) {
-    super(testName);
+public class BFSsearcherTest {
+  private Connection[] tiny;
+
+  @Before
+  public void initialize() {
+    Connection[] connections = new Connection[3];
+
+    SwitchPoint p1 = new SwitchPoint(1, Gate.A);
+    SwitchPoint p2 = new SwitchPoint(1, Gate.B);
+
+    connections[0] = new Connection(p1, p2);
+    connections[1] = new Connection(p2, p1);
+
+
+    tiny = connections;
   }
 
-  public static Test suite() {
-    return new TestSuite(BFSsearcherTest.class);
+  @Test
+  public void testPathGetterTinyFromA() {
+    LinkedList<Connection> paths = BFSsearcher.getPaths(tiny, new SwitchPoint(1, Gate.A));
+
+    LinkedList<Connection> correctAns = new LinkedList<Connection>();
+    correctAns.add(tiny[1]);
+
+    assertEquals(correctAns, paths);
   }
 
-  public void testPathGetterTiny() {
-//    LinkedList<Connection> connections = new LinkedList<Connection>();
-//
-//    SwitchPoint p1 = new SwitchPoint(1, Gate.A);
-//    SwitchPoint p2 = new SwitchPoint(1, Gate.B);
-//    connections.add(new Connection(p2, p1));
-//    connections.add(new Connection(p1, p2));
-//
-//    LinkedList<Integer> paths = BFSsearcher.getPaths(connections, p1);
-//    assertEquals(1, (int) paths.size());
-//    assertEquals(1, (int) paths.getFirst());
+  @Test
+  public void testPathGetterTinyFromB() {
+    LinkedList<Connection> paths = BFSsearcher.getPaths(tiny, new SwitchPoint(1, Gate.B));
+
+    LinkedList<Connection> correctAns = new LinkedList<Connection>();
+    correctAns.add(tiny[0]);
+
+    assertEquals(correctAns, paths);
   }
+
+  @Test
+  public void testPathGetterTinyFromC() {
+    LinkedList<Connection> paths = BFSsearcher.getPaths(tiny, new SwitchPoint(1, Gate.C));
+
+    LinkedList<Connection> correctAns = new LinkedList<Connection>();
+    correctAns.add(tiny[0]);
+
+    assertEquals(correctAns, paths);
+  }
+
 }
