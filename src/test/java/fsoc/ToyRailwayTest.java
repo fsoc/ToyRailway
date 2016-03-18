@@ -1,20 +1,12 @@
 package fsoc;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.*;
+import static org.junit.Assert.*;
 import java.util.Scanner;
 import java.util.Arrays;
 
-public class ToyRailwayTest extends TestCase {
-  public ToyRailwayTest(String testName) {
-    super(testName);
-  }
-
-  public static Test suite() {
-    return new TestSuite(ToyRailwayTest.class);
-  }
-
+public class ToyRailwayTest {
+  @Test
   public void testGraphCreation() {
     //TODO: read from file:
     Scanner scanner = new Scanner("2 1\n1B 2A");
