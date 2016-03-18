@@ -31,13 +31,10 @@ public class BFSsearcher {
    * @param connections An array with up to three connections from this switch
    * @param currentPoint The point we currently reside at
    */
-  public static LinkedList<Connection> getPaths(Connection[] connections,
-      SwitchPoint currentPoint) {
+  public static LinkedList<Connection> getPaths(Connection[] connections, Gate currentGate) {
     LinkedList<Connection> paths = new LinkedList<Connection>();
 
-    Gate current = currentPoint.getGate();
-
-    if (current == Gate.A) {
+    if (currentGate == Gate.A) {
       // Exit from B & C (not A, because that will be going backwards)
       paths = addUnvisited(connections[1], paths);
       paths = addUnvisited(connections[2], paths);
