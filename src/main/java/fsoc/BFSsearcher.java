@@ -26,10 +26,12 @@ public class BFSsearcher {
   }
 
   /**
+   * Get paths for this switch given where we came from and its
+   * connections to other switches.
    * If you arrive from a A point then you can exit the switch from B,C
    * otherwise only throught an A gate.
    * @param connections An array with up to three connections from this switch
-   * @param currentPoint The point we currently reside at
+   * @param currentGate The point we currently reside at (came through)
    */
   public static LinkedList<Connection> getPaths(Connection[] connections, Gate currentGate) {
     LinkedList<Connection> paths = new LinkedList<Connection>();
