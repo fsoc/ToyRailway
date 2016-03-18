@@ -25,6 +25,14 @@ public class Connection {
     return to;
   }
 
+  public boolean visited() {
+    return visited;
+  }
+
+  public void visit() {
+    visited = true;
+  }
+
   public boolean equals(Object obj) {
     Connection conn = (Connection) obj;
     if (from.equals(conn.from) &&

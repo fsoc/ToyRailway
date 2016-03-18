@@ -28,26 +28,32 @@ public class BFSsearcher {
   /**
    * If you arrive from a A point then you can exit the switch from B,C
    * otherwise only throught an A gate.
+   * @param connections An array with up to three connections from this switch
+   * @param currentPoint The point we currently reside at
    */
-  public static void getPaths(LinkedList<Connection> connections,
+  public static LinkedList<Connection> getPaths(Connection[] connections,
       SwitchPoint currentPoint) {
+    LinkedList<Connection> paths = new LinkedList<Connection>();
 
-//    ListIterator<Collection> iterator = connections.iterator();
-//
-//    while (iterator.hasNext()) {
-//      Connection c = iterator.next();
-//
-//      if (currentPoint.getGate() == Gate.A) {
-//        // Exit from B & C (not A, because that will be going backwards)
-//        if (c.getFrom().getGate() != Gate.A) {
-//          paths.add(c);
-//        }
-//      }
-//
-//    }
+    Gate current = currentPoint.getGate();
 
-
-
+    if (current == Gate.A) {
+      // Exit from B & C (not A, because that will be going backwards)
+      paths = addUnvisited(connections[1], paths);
+      paths = addUnvisited(connections[2], paths);
+    } else {
+      // Exit from A
+      paths = addUnvisited(connections[0], paths);
+    }
+    return paths;
   }
 
+  private static LinkedList<Connection> addUnvisited(Connection conn, LinkedList<Connection> paths) {
+    if (conn != null && !conn.visited()) {
+      conn.visit();
+      paths.add(conn);
+    }
+
+    return paths;
+  }
 }
