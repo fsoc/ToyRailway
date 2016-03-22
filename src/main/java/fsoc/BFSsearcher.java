@@ -3,7 +3,7 @@ import java.util.LinkedList;
 
 public class BFSsearcher {
   private static final SwitchPoint startingPoint = new SwitchPoint(1, Gate.A);
-  private static LinkedList<Integer> queue = new LinkedList<Integer>();
+  private static LinkedList<Connection> queue = new LinkedList<Connection>();
 
   /**
    * Do a BFS search for the shortest loop returning to the 1A switch point
@@ -13,7 +13,7 @@ public class BFSsearcher {
    * @return the gate selections needed to take in order to arrive at 1A again
    */
   public static String search(Connection[][] switches) {
-    queue.add(startingPoint.getSwitchPoint());
+    //queue.add(startingPoint.getSwitchPoint());
 
     while (!queue.isEmpty()) {
       //TODO: queue needs to contain connections instead of switchPoints
