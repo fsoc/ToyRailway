@@ -34,9 +34,15 @@ public class ToyRailwayTest {
   }
 
   @Test
-  public void testBFSsearch() throws FileNotFoundException {
+  public void testBFSsearchSmall() throws FileNotFoundException {
     Scanner scanner = new Scanner(new File("examples/sample4.in"));
     assertEquals("B", ToyRailway.BFSsearch(scanner));
+  }
+
+  @Test
+  public void testBFSsearchImposs() throws FileNotFoundException {
+    Scanner scanner = new Scanner(new File("examples/sample2.in"));
+    assertEquals("Impossible", ToyRailway.BFSsearch(scanner));
   }
 
 }

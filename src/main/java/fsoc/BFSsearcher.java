@@ -3,7 +3,7 @@ import java.util.LinkedList;
 
 public class BFSsearcher {
   private static final SwitchPoint startingPoint = new SwitchPoint(1, Gate.A);
-  private static LinkedList<Connection> queue = new LinkedList<Connection>();
+  private static LinkedList<Connection> queue;
 
   /**
    * Do a BFS search for the shortest loop returning to the 1A switch point
@@ -13,18 +13,28 @@ public class BFSsearcher {
    * @return the gate selections needed to take in order to arrive at 1A again
    */
   public static String search(Connection[][] switches) {
-    //queue.add(startingPoint.getSwitchPoint());
+    queue = new LinkedList<Connection>();
+
+    queue.addAll(getPaths(switches[0], Gate.A));
 
     while (!queue.isEmpty()) {
-      //TODO: queue needs to contain connections instead of switchPoints
-      //TODO: getPaths
-      //TODO: circleDetection for when to: 1A
+      Connection current = queue.remove();
+      SwitchPoint from = current.getFrom();
+      SwitchPoint to = current.getTo();
+
+      System.out.println("current: from: " + from.getSwitchPoint() + " " + from.getGate() +" to:" + to.getSwitchPoint() + " " + to.getGate());
+
+      if (to.getSwitchPoint() == 1 && to.getGate() == Gate.A) {
+        return "B";
+      }
+
+      queue.addAll(getPaths(switches[to.getSwitchPoint() - 1], to.getGate()));
+
       //TODO: Keep track of the path-string recursivly and print when circle is found
-      //TODO: enqueue them
 
     }
 
-    return "B";
+    return "Impossible";
   }
 
   /**
