@@ -4,12 +4,14 @@ import org.junit.*;
 import static org.junit.Assert.*;
 import java.util.Scanner;
 import java.util.Arrays;
+import java.io.File;
+import java.io.FileNotFoundException;
 
 public class ToyRailwayTest {
   @Test
-  public void testGraphCreation() {
-    //TODO: read from file:
-    Scanner scanner = new Scanner("2 1\n1B 2A");
+  public void testGraphCreation() throws FileNotFoundException {
+    Scanner scanner = new Scanner(new File("examples/sample3.in"));
+
     Connection[][] trainSwitches = ToyRailway.graphCreator(scanner);
 
     Connection[][] correctAnswer = {
@@ -29,6 +31,12 @@ public class ToyRailwayTest {
     };
 
     assertTrue(Arrays.deepEquals(trainSwitches, correctAnswer));
+  }
+
+  @Test
+  public void testBFSsearch() throws FileNotFoundException {
+    Scanner scanner = new Scanner(new File("examples/sample4.in"));
+    assertEquals("B", ToyRailway.BFSsearch(scanner));
   }
 
 }

@@ -9,8 +9,12 @@ public class ToyRailway  {
   public static void main(String[] args) {
     Scanner scanner = new Scanner(System.in).useDelimiter("\\s");
 
+    System.out.println(BFSsearch(scanner));
+  }
+
+  public static String BFSsearch(Scanner scanner) {
     Connection[][] trainSwitches = graphCreator(scanner);
-//    System.out.println(BFSsearcher.search(trainSwitches));
+    return BFSsearcher.search(trainSwitches);
   }
 
   /**
