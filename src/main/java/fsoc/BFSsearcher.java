@@ -1,9 +1,10 @@
 package fsoc;
 import java.util.LinkedList;
+import java.util.Iterator;
 
 public class BFSsearcher {
   private static final SwitchPoint startingPoint = new SwitchPoint(1, Gate.A);
-  private static LinkedList<Connection> queue;
+  private static LinkedList<LinkedList<Connection>> queue;
 
   /**
    * Do a BFS search for the shortest loop returning to the 1A switch point
@@ -13,24 +14,48 @@ public class BFSsearcher {
    * @return the gate selections needed to take in order to arrive at 1A again
    */
   public static String search(Connection[][] switches) {
-    queue = new LinkedList<Connection>();
+    queue = new LinkedList<LinkedList<Connection>>();
 
-    queue.addAll(getPaths(switches[0], Gate.A));
+    LinkedList<Connection> possiblePaths = getPaths(switches[0], Gate.A);
+
+    Iterator<Connection> it = possiblePaths.iterator();
+    while (it.hasNext()) {
+      LinkedList<Connection> newPath = new LinkedList<Connection>();
+      newPath.add(it.next());
+      queue.add(newPath);
+    }
 
     while (!queue.isEmpty()) {
-      Connection current = queue.remove();
+      LinkedList<Connection> path = queue.remove();
+
+      Connection current = path.getLast();
+
       SwitchPoint from = current.getFrom();
       SwitchPoint to = current.getTo();
 
       System.out.println("current: from: " + from.getSwitchPoint() + " " + from.getGate() +" to:" + to.getSwitchPoint() + " " + to.getGate());
 
       if (to.getSwitchPoint() == 1 && to.getGate() == Gate.A) {
+
+        it = path.iterator();
+        while (it.hasNext()) {
+          Connection c = it.next();
+          from = c.getFrom();
+          to = c.getTo();
+
+          System.out.println("path: from: " + from.getSwitchPoint() + " " + from.getGate() +" to:" + to.getSwitchPoint() + " " + to.getGate());
+        }
         return "B";
       }
 
-      queue.addAll(getPaths(switches[to.getSwitchPoint() - 1], to.getGate()));
+      possiblePaths = getPaths(switches[to.getSwitchPoint() - 1], to.getGate());
 
-      //TODO: Keep track of the path-string recursivly and print when circle is found
+      it = possiblePaths.iterator();
+      while (it.hasNext()) {
+        LinkedList<Connection> newPath = new LinkedList<Connection>(path);
+        newPath.add(it.next());
+        queue.add(newPath);
+      }
 
     }
 
