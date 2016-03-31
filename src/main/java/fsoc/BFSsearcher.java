@@ -3,63 +3,84 @@ import java.util.LinkedList;
 import java.util.Iterator;
 
 public class BFSsearcher {
-  private static final SwitchPoint startingPoint = new SwitchPoint(1, Gate.A);
-  private static LinkedList<LinkedList<Connection>> queue;
-
   /**
    * Do a BFS search for the shortest loop returning to the 1A switch point
    * or show that it is impossible by an exhaustive search.
+   *
+   * The walk is a way of keeping track of the current path when arriving at a
+   * circle in our train ride through the switches.
    *
    * @param switches a datastructure with all switches and their connections
    * @return the gate selections needed to take in order to arrive at 1A again
    */
   public static String search(Connection[][] switches) {
-    queue = new LinkedList<LinkedList<Connection>>();
+    // The queues consists of walks through our train models of walks through our train model
+    LinkedList<LinkedList<Connection>> queue = new LinkedList<LinkedList<Connection>>();
 
-    LinkedList<Connection> possiblePaths = getPaths(switches[0], Gate.A);
-
-    Iterator<Connection> it = possiblePaths.iterator();
-    while (it.hasNext()) {
-      LinkedList<Connection> newPath = new LinkedList<Connection>();
-      newPath.add(it.next());
-      queue.add(newPath);
-    }
+    // Populate our queue with an empty walk from the connections of switch 1, gate A
+    populateQueue(queue, switches[0], Gate.A, null);
 
     while (!queue.isEmpty()) {
-      LinkedList<Connection> path = queue.remove();
+      LinkedList<Connection> walk = queue.remove();
 
-      Connection current = path.getLast();
+      // Start from the end of our walk of connections
+      Connection current = walk.getLast();
 
       SwitchPoint from = current.getFrom();
       SwitchPoint to = current.getTo();
 
-      System.out.println("current: from: " + from.getSwitchPoint() + " " + from.getGate() +" to:" + to.getSwitchPoint() + " " + to.getGate());
-
+      // If we made a circle and are going back to switch 1, gate A
       if (to.getSwitchPoint() == 1 && to.getGate() == Gate.A) {
 
-        it = path.iterator();
+        Iterator<Connection> it = walk.iterator();
         while (it.hasNext()) {
           Connection c = it.next();
           from = c.getFrom();
           to = c.getTo();
 
-          System.out.println("path: from: " + from.getSwitchPoint() + " " + from.getGate() +" to:" + to.getSwitchPoint() + " " + to.getGate());
+          System.out.println("walk: from: " + from.getSwitchPoint() + " " + from.getGate() +" to:" + to.getSwitchPoint() + " " + to.getGate());
         }
         return "B";
       }
 
-      possiblePaths = getPaths(switches[to.getSwitchPoint() - 1], to.getGate());
-
-      it = possiblePaths.iterator();
-      while (it.hasNext()) {
-        LinkedList<Connection> newPath = new LinkedList<Connection>(path);
-        newPath.add(it.next());
-        queue.add(newPath);
-      }
-
+      // Otherwise follow the connections to destination and send our current walk
+      populateQueue(queue, switches[to.getSwitchPoint() - 1], to.getGate(), walk);
     }
 
     return "Impossible";
+  }
+
+  /**
+   * Add different possible paths by getting possible paths for this connection
+   * and its gate, and adding every one of them to a new possible path on the
+   * queue.
+   * @param queue the queue of walks
+   * @param connections the current connections from this switch
+   * @param currentGate the gate we are arriving from
+   * @param walk the current walk in our graph, a new walk is generated if this param is null
+   */
+  private static void populateQueue(LinkedList<LinkedList<Connection>> queue,
+      Connection[] connections,
+      Gate currentGate,
+      LinkedList<Connection> walk) {
+
+    LinkedList<Connection> possiblePaths = getPaths(connections, currentGate);
+    LinkedList<Connection> newWalk;
+
+    // Get the possible paths
+    Iterator<Connection> it = possiblePaths.iterator();
+
+    while (it.hasNext()) {
+      // Add this path to our walk and add it to the queue.
+      if (walk == null) {
+        newWalk = new LinkedList<Connection>();
+      } else {
+        newWalk = new LinkedList<Connection>(walk);
+      }
+      newWalk.add(it.next());
+      queue.add(newWalk);
+    }
+
   }
 
   /**
