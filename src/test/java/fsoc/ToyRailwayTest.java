@@ -41,8 +41,20 @@ public class ToyRailwayTest {
 
   @Test
   public void testBFSsearchImposs() throws FileNotFoundException {
-    Scanner scanner = new Scanner(new File("examples/sample2.in"));
-    assertEquals("Impossible", ToyRailway.BFSsearch(scanner));
+    executeTextFiles("examples/sample2.in", "examples/sample2.ans");
+  }
+
+  @Test
+  public void testBFSsearchExample() throws FileNotFoundException {
+    executeTextFiles("examples/sample1.in", "examples/sample1.ans");
+  }
+
+  public void executeTextFiles(String indata, String outdata) throws FileNotFoundException {
+    Scanner inscanner = new Scanner(new File(indata));
+    Scanner outscanner = new Scanner( new File(outdata) );
+    String answer = outscanner.next();
+    outscanner.close();
+    assertEquals(answer, ToyRailway.BFSsearch(inscanner));
   }
 
 }
