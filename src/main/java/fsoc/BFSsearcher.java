@@ -31,24 +31,48 @@ public class BFSsearcher {
 
       // If we made a circle and are going back to switch 1, gate A
       if (to.getSwitchPoint() == 1 && to.getGate() == Gate.A) {
-
-        Iterator<Connection> it = walk.iterator();
-        while (it.hasNext()) {
-          Connection c = it.next();
-          from = c.getFrom();
-          to = c.getTo();
-
-          System.out.println("walk: from: " + from.getSwitchPoint() + " " + from.getGate() +" to:" + to.getSwitchPoint() + " " + to.getGate());
-        }
-        return "B";
+        return formatWalk(walk, switches.length);
       }
 
       // Otherwise follow the connections to destination and send our current walk
       populateQueue(queue, switches[to.getSwitchPoint() - 1], to.getGate(), walk);
     }
 
+    // If the queue is empty but Switch 1, gate A is not reached, then it must be impossible
     return "Impossible";
   }
+
+  /**
+   * Output a string of N characters,
+   * each being either B or C and giving the state of switch 1,2,...,N, respectively.
+   * Default to B.
+   * @param walk the walk
+   * @param switches the amount of switches
+   */
+  private static String formatWalk(LinkedList<Connection> walk, int switches) {
+    boolean[] shouldBeC = new boolean[switches];
+    String ans = "";
+    Iterator<Connection> it = walk.iterator();
+
+    while (it.hasNext()) {
+      Connection c = it.next();
+      SwitchPoint from = c.getFrom();
+
+      if (from.getGate() == Gate.C) {
+        shouldBeC[from.getSwitchPoint() - 1] = true;
+      }
+    }
+
+    for (int i = 0; i < switches; i++) {
+      if (shouldBeC[i]) {
+        ans += "C";
+      } else {
+        ans += "B";
+      }
+    }
+    return ans;
+  }
+
 
   /**
    * Add different possible paths by getting possible paths for this connection
