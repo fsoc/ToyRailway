@@ -4,16 +4,18 @@
 
 package fsoc;
 import java.util.Scanner;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 public class ToyRailway  {
   public static void main(String[] args) {
-    Scanner scanner = new Scanner(System.in).useDelimiter("\\s");
-
-    System.out.println(BFSsearch(scanner));
+    Kattio io = new Kattio(System.in, System.out);
+    io.println(BFSsearch(System.in));
+    io.close();
   }
 
-  public static String BFSsearch(Scanner scanner) {
-    Connection[][] trainSwitches = graphCreator(scanner);
+  public static String BFSsearch(InputStream in) {
+    Connection[][] trainSwitches = graphCreator(in);
     return BFSsearcher.search(trainSwitches);
   }
 
@@ -21,27 +23,29 @@ public class ToyRailway  {
    * Create a Graph containing all switches in an array, where every
    * element is an array with 0 to 3 connections to other switches
    */
-  public static Connection[][] graphCreator(Scanner scanner) {
+  public static Connection[][] graphCreator(InputStream in) {
+    Kattio io = new Kattio(in);
+
     // Read the first line denoting "switches connections"
-    int switches = scanner.nextInt();
-    int connections = scanner.nextInt();
+
+    int switches = io.getInt();
+    int connections = io.getInt();
 
     // Yes, we hardcode for 3 gates...
     Connection[][] trainSwitches = new Connection[switches][3];
 
     // Read the rest of lines containing the actual connections
-    while (scanner.hasNext()) {
-      String s1 = scanner.next();
-      int trainSwitch1 = Integer.parseInt(s1.substring(0, s1.length() - 1));
-      String gate1 = s1.substring(s1.length() - 1);
-      String s2 = scanner.next();
-      int trainSwitch2 = Integer.parseInt(s2.substring(0, s2.length() - 1));
-      String gate2 = s2.substring(s2.length() - 1);
+    while (io.hasMoreTokens()) {
+      String from = io.getWord();
+      int trainSwitch1 = Integer.parseInt(from.substring(0, from.length() - 1));
+      String gate1 = from.substring(from.length() - 1);
 
+      String to = io.getWord();
+      int trainSwitch2 = Integer.parseInt(to.substring(0, to.length() - 1));
+      String gate2 = to.substring(to.length() - 1);
       addConnection(trainSwitch1, trainSwitch2, gate1, gate2, trainSwitches);
-
     }
-    scanner.close();
+    io.close();
 
     return trainSwitches;
   }
