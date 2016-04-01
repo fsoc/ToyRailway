@@ -11,6 +11,7 @@ public class ToyRailway  {
   public static void main(String[] args) {
     Kattio io = new Kattio(System.in, System.out);
     io.println(BFSsearch(System.in));
+    io.flush();
     io.close();
   }
 
@@ -24,7 +25,7 @@ public class ToyRailway  {
    * element is an array with 0 to 3 connections to other switches
    */
   public static Connection[][] graphCreator(InputStream in) {
-    Kattio io = new Kattio(in);
+    Kattio io = new Kattio(in, System.out);
 
     // Read the first line denoting "switches connections"
 
@@ -45,7 +46,6 @@ public class ToyRailway  {
       String gate2 = to.substring(to.length() - 1);
       addConnection(trainSwitch1, trainSwitch2, gate1, gate2, trainSwitches);
     }
-    io.close();
 
     return trainSwitches;
   }
