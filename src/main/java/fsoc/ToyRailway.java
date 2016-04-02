@@ -38,11 +38,11 @@ public class ToyRailway  {
     // Read the rest of lines containing the actual connections
     while (io.hasMoreTokens()) {
       String from = io.getWord();
-      int trainSwitch1 = Integer.parseInt(from.substring(0, from.length() - 1));
+      int trainSwitch1 = Integer.parseInt(from.substring(0, from.length() - 1)) - 1;
       String gate1 = from.substring(from.length() - 1);
 
       String to = io.getWord();
-      int trainSwitch2 = Integer.parseInt(to.substring(0, to.length() - 1));
+      int trainSwitch2 = Integer.parseInt(to.substring(0, to.length() - 1)) - 1;
       String gate2 = to.substring(to.length() - 1);
       addConnection(trainSwitch1, trainSwitch2, gate1, gate2, trainSwitches);
     }
@@ -58,8 +58,8 @@ public class ToyRailway  {
     SwitchPoint p1 = new SwitchPoint(trainSwitch1, Gate.valueOf(gate1));
     SwitchPoint p2 = new SwitchPoint(trainSwitch2, Gate.valueOf(gate2));
 
-    trainSwitches[trainSwitch1-1][p1.getGate().getValue()] = new Connection(p1, p2);
-    trainSwitches[trainSwitch2-1][p2.getGate().getValue()] = new Connection(p2, p1);
+    trainSwitches[trainSwitch1][p1.getGate().getValue()] = new Connection(p1, p2);
+    trainSwitches[trainSwitch2][p2.getGate().getValue()] = new Connection(p2, p1);
 
   }
 
