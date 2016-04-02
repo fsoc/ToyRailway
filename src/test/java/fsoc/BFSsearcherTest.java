@@ -24,7 +24,7 @@ public class BFSsearcherTest {
 
   @Test
   public void testPathGetterTinyFromA() {
-    LinkedList<Connection> paths = BFSsearcher.getPaths(tiny, Gate.A);
+    LinkedList<Connection> paths = BFSsearcher.getPaths(tiny, Gate.A, 0, Gate.A);
 
     LinkedList<Connection> correctAns = new LinkedList<Connection>();
     correctAns.add(tiny[1]);
@@ -34,7 +34,7 @@ public class BFSsearcherTest {
 
   @Test
   public void testPathGetterTinyFromB() {
-    LinkedList<Connection> paths = BFSsearcher.getPaths(tiny, Gate.B);
+    LinkedList<Connection> paths = BFSsearcher.getPaths(tiny, Gate.B, 0, Gate.A);
 
     LinkedList<Connection> correctAns = new LinkedList<Connection>();
     correctAns.add(tiny[0]);
@@ -44,7 +44,7 @@ public class BFSsearcherTest {
 
   @Test
   public void testPathGetterTinyFromC() {
-    LinkedList<Connection> paths = BFSsearcher.getPaths(tiny, Gate.C);
+    LinkedList<Connection> paths = BFSsearcher.getPaths(tiny, Gate.C, 0, Gate.A);
 
     LinkedList<Connection> correctAns = new LinkedList<Connection>();
     correctAns.add(tiny[0]);
