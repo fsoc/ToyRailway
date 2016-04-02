@@ -4,6 +4,8 @@ public class Connection {
   private SwitchPoint from;
   private SwitchPoint to;
   private boolean visited;
+  private int ancestorSwitch;
+  private Gate ancestorGate;
 
   /**
    * A connection between two switch points.
@@ -29,7 +31,18 @@ public class Connection {
     return visited;
   }
 
-  public void visit() {
+  public int getAncestorSwitch() {
+    return ancestorSwitch;
+  }
+
+  public Gate getAncestorGate() {
+    return ancestorGate;
+  }
+
+  // A visit was made to this connetion from this ancestor Switch and Gate
+  public void visit(int ancestorSwitch, Gate ancestorGate) {
+    this.ancestorSwitch = ancestorSwitch;
+    this.ancestorGate = ancestorGate;
     visited = true;
   }
 
