@@ -17,7 +17,7 @@ public class BFSsearcher {
     // The queues consists of walks through our train models of walks through our train model
     LinkedList<LinkedList<Connection>> queue = new LinkedList<LinkedList<Connection>>();
 
-    // Populate our queue with an empty walk from the connections of switch 1, gate A
+    // Populate our queue with an empty walk from the connections of switch 0, gate A
     populateQueue(queue, switches[0], Gate.A, null);
 
     while (!queue.isEmpty()) {
@@ -29,22 +29,22 @@ public class BFSsearcher {
       SwitchPoint from = current.getFrom();
       SwitchPoint to = current.getTo();
 
-      // If we made a circle and are going back to switch 1, gate A
-      if (to.getSwitchPoint() == 1 && to.getGate() == Gate.A) {
+      // If we made a circle and are going back to switch 0, gate A
+      if (to.getSwitchPoint() == 0 && to.getGate() == Gate.A) {
         return formatWalk(walk, switches.length);
       }
 
       // Otherwise follow the connections to destination and send our current walk
-      populateQueue(queue, switches[to.getSwitchPoint() - 1], to.getGate(), walk);
+      populateQueue(queue, switches[to.getSwitchPoint()], to.getGate(), walk);
     }
 
-    // If the queue is empty but Switch 1, gate A is not reached, then it must be impossible
+    // If the queue is empty but Switch 0, gate A is not reached, then it must be impossible
     return "Impossible";
   }
 
   /**
    * Output a string of N characters,
-   * each being either B or C and giving the state of switch 1,2,...,N, respectively.
+   * each being either B or C and giving the state of switch 0,1,...,N, respectively.
    * Default to B.
    * @param walk the walk
    * @param switches the amount of switches
@@ -59,7 +59,7 @@ public class BFSsearcher {
       SwitchPoint from = c.getFrom();
 
       if (from.getGate() == Gate.C) {
-        shouldBeC[from.getSwitchPoint() - 1] = true;
+        shouldBeC[from.getSwitchPoint()] = true;
       }
     }
 

@@ -20,13 +20,13 @@ public class ToyRailwayTest {
       {
         null,
         new Connection(
-            new SwitchPoint(1, Gate.B),
-            new SwitchPoint(2, Gate.A)),
+            new SwitchPoint(0, Gate.B),
+            new SwitchPoint(1, Gate.A)),
         null
       }, {
         new Connection(
-            new SwitchPoint(2, Gate.A),
-            new SwitchPoint(1, Gate.B)),
+            new SwitchPoint(1, Gate.A),
+            new SwitchPoint(0, Gate.B)),
         null,
         null
       }
