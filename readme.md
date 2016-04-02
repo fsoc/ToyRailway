@@ -7,4 +7,4 @@
     mvn test
 
 ## run
-    java -cp target/ToyRailway-1.0.jar fsoc.ToyRailway
+    cat examples/sample1.in |java -cp target/ToyRailway-1.0.jar fsoc.ToyRailway
