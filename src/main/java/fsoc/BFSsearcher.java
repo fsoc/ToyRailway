@@ -47,19 +47,20 @@ public class BFSsearcher {
    * @param startGate the gate of that switch to start backtracking from
    */
   private static String printGates(Connection[][] switches, int startSwitch, Gate startGate) {
-    boolean[] shouldBeC = new boolean[switches.length];
+    int length = switches.length;
+    boolean[] shouldBeC = new boolean[length];
 
     backtrack(shouldBeC, switches, startSwitch, startGate);
 
-    String ans = "";
-    for (int i = 0; i < switches.length; i++) {
+    StringBuilder builder = new StringBuilder(length);
+    for (int i = 0; i < length; i++) {
       if (shouldBeC[i]) {
-        ans += "C";
+        builder.append('C');
       } else {
-        ans += "B";
+        builder.append('B');
       }
     }
-    return ans;
+    return builder.toString();
   }
 
   // Backtrack our path by following ancestors
